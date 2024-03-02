@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f4f4f4;
+  padding: 2rem;
+  width: 80%;
+  margin: 1rem auto;
+}
+
+.add-books-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 3rem;
+}
+.add-books-container div {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
