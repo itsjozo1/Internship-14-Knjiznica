@@ -218,10 +218,16 @@ if(!localStorage.getItem('books')){
     localStorage.setItem('books', JSON.stringify(booksList));
 }
 
-const addBook = (book) => {
-    booksList.push(book);
-    localStorage.setItem('books', JSON.stringify(booksList));
+const getBooks = () => {
+    return JSON.parse(localStorage.getItem('books'));
 }
+
+const addBook = (book) => {
+    let storageBooksList = getBooks();
+    storageBooksList.push(book);
+    localStorage.setItem('books', JSON.stringify(storageBooksList));
+}
+
 
 const borrowBook = (id) => {
     let book = booksList.find(book => book.id === id);
@@ -237,4 +243,4 @@ const returnBook = (id) => {
     localStorage.setItem('books', JSON.stringify(booksList));
 }
 
-export { booksList, addBook, borrowBook, returnBook, genres };
+export { booksList, addBook, borrowBook, returnBook, genres, getBooks };

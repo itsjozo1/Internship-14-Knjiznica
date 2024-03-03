@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
-import { addBook, booksList, genres } from './books';
+import { addBook, genres, getBooks } from './books';
 import { checkInput, getInputValue } from './checkInputMethods.js'; 
 import DisplayBooks from './DisplayBooks.jsx';
 
 function AddBooks() {
   
-  const [books, setBooks] = useState(booksList); 
+  const [books, setBooks] = useState(getBooks()); 
   
   const handleAddBook = () => {
     const bookData = {
@@ -35,6 +35,7 @@ function AddBooks() {
       </option>
     ));
   };
+
   return (
     <>
       <div className='add-books-container'>
