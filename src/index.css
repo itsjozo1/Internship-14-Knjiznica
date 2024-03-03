@@ -12,6 +12,10 @@ body {
   margin: 1rem auto;
 }
 
+.add-books-container h2 {
+  margin-right: 2rem;
+}
+
 .add-books-container {
   display: flex;
   gap: 1rem;
