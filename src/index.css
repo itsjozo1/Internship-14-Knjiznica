@@ -19,7 +19,7 @@ body {
 .add-books-container {
   display: flex;
   gap: 1rem;
-  margin-top: 20px;
+  margin: 3rem 0;
   border: 1px solid #000;
   border-radius: 10px;
   padding: 3rem;
@@ -67,4 +67,16 @@ body {
   width: 6rem;
   height: 90%;
   object-fit: cover;
+}
+
+.filter-books-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-right: 5rem;
+}
+
+.filter-books-name-container {
+  display: flex;
+  gap: 0.5rem;
 }
