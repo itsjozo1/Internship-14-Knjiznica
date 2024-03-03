@@ -10,7 +10,7 @@ let genres= {
     biography: "Biografija"
 }
 
-let books = [
+let booksList = [
     {
         id: uuidv4(),
         title: "The Great Gatsby",
@@ -215,26 +215,26 @@ let books = [
 
 
 if(!localStorage.getItem('books')){
-    localStorage.setItem('books', JSON.stringify(books));
+    localStorage.setItem('books', JSON.stringify(booksList));
 }
 
 const addBook = (book) => {
-    books.push(book);
-    localStorage.setItem('books', JSON.stringify(books));
+    booksList.push(book);
+    localStorage.setItem('books', JSON.stringify(booksList));
 }
 
 const borrowBook = (id) => {
-    let book = books.find(book => book.id === id);
+    let book = booksList.find(book => book.id === id);
     if(book.avaiableCopies > 0){
         book.avaiableCopies--;
-        localStorage.setItem('books', JSON.stringify(books));
+        localStorage.setItem('books', JSON.stringify(booksList));
     }
 }
 
 const returnBook = (id) => {
-    let book = books.find(book => book.id === id);
+    let book = booksList.find(book => book.id === id);
     book.avaiableCopies++;
-    localStorage.setItem('books', JSON.stringify(books));
+    localStorage.setItem('books', JSON.stringify(booksList));
 }
 
-export { books, addBook, borrowBook, returnBook, genres };
+export { booksList, addBook, borrowBook, returnBook, genres };

@@ -1,12 +1,13 @@
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import './App.css';
-import { genres } from './books';
-import { checkInput, getInputValue } from './checkInputMethods.js';
+import { addBook, booksList, genres } from './books';
+import { checkInput, getInputValue } from './checkInputMethods.js'; 
 
-function AddBooks() {  
+function AddBooks() {
+  const [books, setBooks] = useState(booksList); 
 
-
-  const addBook = () => {
+  const handleAddBook = () => {
     const bookData = {
       id: uuidv4(),
       title: getInputValue('input-title'),
@@ -19,7 +20,9 @@ function AddBooks() {
     };
     
     if (checkInput()) {
-      console.log(bookData);
+      const updatedBooks = [...books, bookData]; 
+      addBook(bookData);
+      setBooks(updatedBooks); 
     }
   };
 
@@ -49,7 +52,7 @@ function AddBooks() {
         </select>
         <input type="number" placeholder='Broj dostupnih knjiga' className='input-avaiable-copies' />
       </div>
-      <button onClick={addBook}>Dodaj knjigu</button>
+      <button onClick={handleAddBook}>Dodaj knjigu</button>
     </div>
   );
 }
