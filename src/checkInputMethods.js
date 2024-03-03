@@ -5,7 +5,7 @@ const checkAvaiableCopies = () => {
     let avaiableCopies = document.querySelector('.input-avaiable-copies');
     avaiableCopies.style.border = '';
     if (Math.abs(avaiableCopies.value) > 1 && avaiableCopies.value !== ''){
-      avaiableCopies.value = Math.floor(avaiableCopies.value);
+      avaiableCopies.value = Math.floor(Math.abs(avaiableCopies.value));
       return true;
     }
     else{
@@ -19,6 +19,7 @@ const checkValidYear = () => {
   const year = document.querySelector('.input-year');
   year.style.border = '';
   if (Math.abs(year.value) < new Date().getFullYear() && year.value !== ''){
+    year.value = Math.floor(Math.abs(year.value));
     return checkAvaiableCopies();
   }
   else{

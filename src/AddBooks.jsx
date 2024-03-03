@@ -13,10 +13,10 @@ function AddBooks() {
       title: getInputValue('input-title'),
       author: getInputValue('input-author'),
       publishingHouse: getInputValue('input-publisher'),
-      yearOfPublication: getInputValue('input-year'),
+      yearOfPublication: Math.floor(Math.abs(getInputValue('input-year'))),
       bookCoverImage: getInputValue('input-image'),
       genres: genres[getInputValue('input-genre')],
-      avaiableCopies: Math.abs(getInputValue('input-avaiable-copies'))
+      avaiableCopies: Math.floor(Math.abs(getInputValue('input-avaiable-copies')))
     };
     
     if (checkInput()) {
