@@ -1,5 +1,5 @@
-import { borrowBook, genres, returnBook } from "./books";
 import { useState } from "react";
+import { borrowBook, findBook, genres, returnBook } from "./books";
 
 const createGenreOptions = () => {
     return Object.keys(genres).map(genre => (
@@ -10,8 +10,9 @@ const createGenreOptions = () => {
 };
 
 
-
-const createBookCard = (books) => {
+function CreateBookCard ( books ) {
+    const [booksCopies, setBooksCopies] = useState({});
+    
     const sortedBooks = books.sort((a, b) => {
         if (a.author !== b.author) {
             return a.author.localeCompare(b.author);
@@ -21,21 +22,27 @@ const createBookCard = (books) => {
         }
         return a.yearOfPublication - b.yearOfPublication;
     });
-
+    
     const checkBookImageLink = (book) => {
         if (book.bookCoverImage === '') {
             return 'https://www.freeiconspng.com/uploads/no-image-icon-4.png';
         }
         return book.bookCoverImage;
     }
-
     const handleBorrowBook = (bookId) => {
         borrowBook(bookId);
-    }
-
+        const updatedBooksCopies = { ...booksCopies };
+        updatedBooksCopies[bookId] = findBook(bookId).avaiableCopies;
+        setBooksCopies(updatedBooksCopies);
+    };
+    
     const handleReturnBook = (bookId) => {
         returnBook(bookId);
-    }
+        const updatedBooksCopies = { ...booksCopies };
+        updatedBooksCopies[bookId] = findBook(bookId).avaiableCopies;
+        setBooksCopies(updatedBooksCopies);
+    };
+    
     return sortedBooks.map(book => (
         <div key={book.id} className='book-card'>
             <img src={checkBookImageLink(book)} alt={book.title} />
@@ -46,7 +53,7 @@ const createBookCard = (books) => {
                 <p>Izdavačka kuća: {book.publishingHouse}</p>
                 <p>Godina izdavanja: {book.yearOfPublication}</p>
                 <p>Žanr: {book.genres}</p>
-                <p>Broj dostupnih knjiga: {book.avaiableCopies}</p>
+                <p>Broj dostupnih knjiga: {booksCopies[book.id] || book.avaiableCopies}</p>
                 <div className="button-container">
                     <button className="borrow-button" onClick={() => handleBorrowBook(book.id)}>Posudi</button>
                     <button className="return-button" onClick={() => handleReturnBook(book.id)}>Vrati</button>
@@ -55,8 +62,9 @@ const createBookCard = (books) => {
         </div>
     ));
 }
+    
 
-function DisplayBooks(books ) {
+function DisplayBooks(books) {
     const [filterName, setFilterName] = useState('');
     const [filterGenre, setFilterGenre] = useState('');
 
@@ -88,7 +96,7 @@ function DisplayBooks(books ) {
                 </select>
             </div>
             <div className='books-container'>
-                {createBookCard(filteredBooks)}
+                {CreateBookCard(filteredBooks)}
             </div>
         </div>
     );

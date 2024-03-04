@@ -245,4 +245,9 @@ const returnBook = (id) => {
     localStorage.setItem('books', JSON.stringify(books));
 }
 
-export { booksList, addBook, borrowBook, returnBook, genres, getBooks };
+const findBook = (id) => {
+    const books = getBooks();
+    return books.find(book => book.id === id);
+}
+
+export { booksList, addBook, borrowBook, returnBook, genres, getBooks, findBook };
