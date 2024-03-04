@@ -1,4 +1,4 @@
-import { genres } from "./books";
+import { borrowBook, genres, returnBook } from "./books";
 import { useState } from "react";
 
 const createGenreOptions = () => {
@@ -8,6 +8,8 @@ const createGenreOptions = () => {
       </option>
     ));
 };
+
+
 
 const createBookCard = (books) => {
     const sortedBooks = books.sort((a, b) => {
@@ -27,6 +29,13 @@ const createBookCard = (books) => {
         return book.bookCoverImage;
     }
 
+    const handleBorrowBook = (bookId) => {
+        borrowBook(bookId);
+    }
+
+    const handleReturnBook = (bookId) => {
+        returnBook(bookId);
+    }
     return sortedBooks.map(book => (
         <div key={book.id} className='book-card'>
             <img src={checkBookImageLink(book)} alt={book.title} />
@@ -38,6 +47,10 @@ const createBookCard = (books) => {
                 <p>Godina izdavanja: {book.yearOfPublication}</p>
                 <p>Žanr: {book.genres}</p>
                 <p>Broj dostupnih knjiga: {book.avaiableCopies}</p>
+                <div className="button-container">
+                    <button className="borrow-button" onClick={() => handleBorrowBook(book.id)}>Posudi</button>
+                    <button className="return-button" onClick={() => handleReturnBook(book.id)}>Vrati</button>
+                </div>
             </div>
         </div>
     ));
@@ -62,26 +75,20 @@ function DisplayBooks(books ) {
     };
 
     return (
-        <div>
-            <h2>Knjige</h2>
-            <div className="display-books-container">
-                <div className="filter-books-container">
-                    <h2>Pretraži knjigu</h2>
-                    <div className="filter-books-name-container">
-                        <h3>Ime knjige</h3>
-                        <input type="text" className="filter-books-name-input" value={filterName} onChange={handleNameChange} />
-                    </div>
-                    <div className="filter-books-genre-container">
-                        <h3>Žanr</h3>
-                        <select className='filter-genre' value={filterGenre} onChange={handleGenreChange}>
-                            <option value="">Svi žanrovi</option>
-                            {createGenreOptions()}
-                        </select>
-                    </div>
+        <div className="display-books-container">
+            <div className="filter-books-container">
+                <h2>Pretraži knjigu</h2>
+                <div className="filter-books-name-container">
+                    <h3>Ime knjige</h3>
+                    <input type="text" className="filter-books-name-input" value={filterName} onChange={handleNameChange} />
                 </div>
-                <div className='books-container'>
-                    {createBookCard(filteredBooks)}
-                </div>
+                <select className='filter-genre' value={filterGenre} onChange={handleGenreChange}>
+                    <option value="">Svi žanrovi</option>
+                    {createGenreOptions()}
+                </select>
+            </div>
+            <div className='books-container'>
+                {createBookCard(filteredBooks)}
             </div>
         </div>
     );

@@ -230,17 +230,19 @@ const addBook = (book) => {
 
 
 const borrowBook = (id) => {
-    let book = booksList.find(book => book.id === id);
+    const books = getBooks();
+    let book = books.find(book => book.id === id);
     if(book.avaiableCopies > 0){
         book.avaiableCopies--;
-        localStorage.setItem('books', JSON.stringify(booksList));
+        localStorage.setItem('books', JSON.stringify(books));
     }
 }
 
 const returnBook = (id) => {
-    let book = booksList.find(book => book.id === id);
+    const books = getBooks();
+    let book = books.find(book => book.id === id);
     book.avaiableCopies++;
-    localStorage.setItem('books', JSON.stringify(booksList));
+    localStorage.setItem('books', JSON.stringify(books));
 }
 
 export { booksList, addBook, borrowBook, returnBook, genres, getBooks };

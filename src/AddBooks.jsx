@@ -5,6 +5,14 @@ import { addBook, genres, getBooks } from './books';
 import { checkInput, getInputValue } from './checkInputMethods.js'; 
 import DisplayBooks from './DisplayBooks.jsx';
 
+const createGenreOptions = () => {
+  return Object.keys(genres).map(genre => (
+    <option key={genre} value={genre}>
+      {genres[genre]}
+    </option>
+  ));
+};
+
 function AddBooks() {
   
   const [books, setBooks] = useState(getBooks()); 
@@ -26,14 +34,6 @@ function AddBooks() {
       addBook(bookData);
       setBooks(updatedBooks); 
     }
-  };
-  
-  const createGenreOptions = () => {
-    return Object.keys(genres).map(genre => (
-      <option key={genre} value={genre}>
-        {genres[genre]}
-      </option>
-    ));
   };
 
   return (
