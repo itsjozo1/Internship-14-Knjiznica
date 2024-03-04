@@ -11,7 +11,11 @@ const createGenreOptions = () => {
 
 
 function CreateBookCard ( books ) {
-    const [booksCopies, setBooksCopies] = useState({});
+    const booksInitialCopies = {};
+    books.forEach(book => (booksInitialCopies[book.id] = book.avaiableCopies));
+
+    const [booksCopies, setBooksCopies] = useState(booksInitialCopies);
+    
     
     const sortedBooks = books.sort((a, b) => {
         if (a.author !== b.author) {
@@ -45,22 +49,23 @@ function CreateBookCard ( books ) {
     
     return sortedBooks.map(book => (
         <div key={book.id} className='book-card'>
-            <img src={checkBookImageLink(book)} alt={book.title} />
+            <img src={checkBookImageLink(book)} alt={book.title} style={{ opacity: booksCopies[book.id] === 0 ? 0.7 : 1 }} />
             <div className="book-card-desc">
-                <h3>{book.title}</h3>
+                <h3>{book.title} {booksCopies[book.id]  === 0 && "(Nedostupno)"}</h3>
                 <p>{book.author}</p>
                 <br />
                 <p>Izdavačka kuća: {book.publishingHouse}</p>
                 <p>Godina izdavanja: {book.yearOfPublication}</p>
                 <p>Žanr: {book.genres}</p>
-                <p>Broj dostupnih knjiga: {booksCopies[book.id] || book.avaiableCopies}</p>
+                <p>Broj dostupnih knjiga: {booksCopies[book.id]}</p>
                 <div className="button-container">
-                    <button className="borrow-button" onClick={() => handleBorrowBook(book.id)}>Posudi</button>
+                    <button className="borrow-button" onClick={() => handleBorrowBook(book.id)} style={{ color: booksCopies[book.id]  === 0 ? "red" : "white" }} disabled={booksCopies[book.id]  === 0}>Posudi</button>
                     <button className="return-button" onClick={() => handleReturnBook(book.id)}>Vrati</button>
                 </div>
             </div>
         </div>
     ));
+    
 }
     
 
