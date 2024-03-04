@@ -9,14 +9,15 @@ const createGenreOptions = () => {
     ));
 };
 
+function CreateBookCard({ books }) {
+    const [booksCopies, setBooksCopies] = useState({});
 
-function CreateBookCard ( books ) {
-    const booksInitialCopies = {};
-    books.forEach(book => (booksInitialCopies[book.id] = book.avaiableCopies));
+    if (Object.keys(booksCopies).length !== books.length) {
+        const booksInitialCopies = {};
+        books.forEach(book => (booksInitialCopies[book.id] = book.avaiableCopies));
+        setBooksCopies(booksInitialCopies);
+    }
 
-    const [booksCopies, setBooksCopies] = useState(booksInitialCopies);
-    
-    
     const sortedBooks = books.sort((a, b) => {
         if (a.author !== b.author) {
             return a.author.localeCompare(b.author);
@@ -33,6 +34,7 @@ function CreateBookCard ( books ) {
         }
         return book.bookCoverImage;
     }
+
     const handleBorrowBook = (bookId) => {
         borrowBook(bookId);
         const updatedBooksCopies = { ...booksCopies };
@@ -59,15 +61,18 @@ function CreateBookCard ( books ) {
                 <p>Žanr: {book.genres}</p>
                 <p>Broj dostupnih knjiga: {booksCopies[book.id]}</p>
                 <div className="button-container">
-                    <button className="borrow-button" onClick={() => handleBorrowBook(book.id)} style={{ color: booksCopies[book.id]  === 0 ? "red" : "white" }} disabled={booksCopies[book.id]  === 0}>Posudi</button>
+                    <button 
+                        className="borrow-button" onClick={() => handleBorrowBook(book.id)} 
+                        style={{ color: booksCopies[book.id]  === 0 ? "red" : "white" }} 
+                        disabled={booksCopies[book.id]  === 0}>
+                        Posudi
+                    </button>
                     <button className="return-button" onClick={() => handleReturnBook(book.id)}>Vrati</button>
                 </div>
             </div>
         </div>
     ));
-    
 }
-    
 
 function DisplayBooks(books) {
     const [filterName, setFilterName] = useState('');
@@ -101,7 +106,7 @@ function DisplayBooks(books) {
                 </select>
             </div>
             <div className='books-container'>
-                {CreateBookCard(filteredBooks)}
+                <CreateBookCard books={filteredBooks} />
             </div>
         </div>
     );
